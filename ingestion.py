@@ -8,7 +8,8 @@ from dotenv import load_dotenv
 from langchain_chroma import Chroma
 from langchain_classic.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
-from langchain_openai import OpenAIEmbeddings
+# from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_tavily import TavilyCrawl, TavilyExtract, TavilyMap
 
@@ -23,11 +24,18 @@ os.environ["SSL_CERT_FILE"] = certifi.where()
 os.environ["REQUESTS_CA_BUNDLE"] = certifi.where()
 
 
-embeddings = OpenAIEmbeddings(
-    model="text-embedding-3-small",
-    show_progress_bar=False,
-    chunk_size=50,
-    retry_min_seconds=10,
+# embeddings = OpenAIEmbeddings(
+#     model="text-embedding-3-small",
+#     show_progress_bar=False,
+#     chunk_size=50,
+#     retry_min_seconds=10,
+# )
+embeddings = HuggingFaceEmbeddings(
+    model_name="all-MiniLM-L6-v2",          # 对应 text-embedding-3-small
+    encode_kwargs={
+        "batch_size": 50,                   # 对应 chunk_size
+        "normalize_embeddings": True        # 标准化向量
+    }
 )
 vectorstore = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
 # vectorstore = PineconeVectorStore(
