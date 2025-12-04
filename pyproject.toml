@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "documentation-helper"
+version = "0.1.0"
+description = "LangChain documentation helper with Streamlit frontend and RAG pipeline"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "beautifulsoup4",
+    "black",
+    "certifi",
+    "fastapi",
+    "firecrawl-py",
+    "isort",
+    "jinja2",
+    "langchain>=1.1.0",
+    "langchain-chroma",
+    "langchain-classic>=1.0.0",
+    "langchain-community",
+    "langchain-core>=1.1.0",
+    "langchain-deepseek>=1.0.1",
+    "langchain-huggingface>=1.1.0",
+    "langchain-pinecone",
+    "langchain-tavily",
+    "langchainhub",
+    "langsmith",
+    "nltk",
+    "openai",
+    "pillow",
+    "python-dotenv",
+    "sentence-transformers>=5.1.2",
+    "streamlit",
+    "streamlit-chat",
+    "tiktoken",
+    "tqdm",
+    "unstructured",
+    "uvicorn",
+]
+
+[dependency-groups]
+dev = ["ipykernel"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend"]
+include = [
+    "*.py",
+    "static/**",
+]
